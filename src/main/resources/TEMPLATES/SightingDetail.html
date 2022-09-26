@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Superhero Sightings</title>
+      <style>
+          body {
+              background-color: deepskyblue;
+          }
+      </style>
+  </head>
+  <body>
+  <div class="container">
+      <div class="row m-4 ">
+          <div class="col text-center m-2">
+              <a href="/" class="btn btn-warning btn-lg">Home</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="superhero" class="btn btn-danger btn-lg">Superhero</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="superpower" class="btn btn-danger btn-lg">Superpowers</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="location" class="btn btn-danger btn-lg">Locations</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="organisation" class="btn btn-danger btn-lg">Organisations</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="sighting" class="btn btn-danger btn-lg">Sightings</a>
+          </div>
+      </div>
+        <div class="row m-4 border border-dark">
+            <div class="col-3 text-center m-3">
+                <span class="h3">Sighting Details</span>
+            </div>
+            <div class="col-7 text-center m-3">
+                <div class="form-group row">
+                    <label for="superheroVal" class="col-3 col-form-label">
+                        Superhero</label>
+                    <select id="superheroVal" name="superheroVal" class="form-control col-9" disabled>
+                        <option value="" selected disabled hidden>Superhero</option>
+                        <option th:each="superhero : ${superhero}"
+                            th:value="${superhero.superheroId}"
+                            th:text="${superhero.superheroName}"
+                            th:selected="${superhero.superheroId == sighting.superhero.superheroId}">
+                        Superhero</option>
+                    </select>
+                </div>
+
+                <div class="form-group row">
+                    <label for="locationVal" class="col-3 col-form-label">
+                        Location
+                    </label>
+                    <select id="locationVal" name="locationVal" class="form-control col-9" disabled>
+                        <option value="" selected disabled hidden>Location</option>
+                        <option th:each="location : ${locations}" 
+                            th:value="${location.locationId}" 
+                            th:text="${location.locationName}"
+                            th:selected="${location.locationId == sighting.location.locationId}">
+                        Location</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="dateVal" class="col-3 col-form-label">
+                        Date</label>
+                    <div class="col-9">
+                        <input type="date" name="dateVal" 
+                               id="dateVal" class="form-control"
+                               th:value="${sightingDate}" disabled/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="timeVal" class="col-3 col-form-label">
+                        Time</label>
+                    <div class="col-9">
+                        <input type="time" name="timeVal" 
+                               id="timeVal" class="form-control"
+                               th:value="${sightingTime}" disabled/>
+                    </div>
+                </div>
+                <a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}" class="btn btn-primary">Edit</a>
+                <a href="#" th:href="@{/confirmDeleteSighting(id=${sighting.sightingId})}" class="btn btn-secondary">Delete</a>
+            </div>
+        </div>
+    </div> 
+  </body>
+</html>

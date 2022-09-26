@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Superhero Sightings</title>
+      <style>
+          .jumbotron {
+              background-color: gold;
+              text-align: center;
+              color: navy;
+          }
+          body {
+              background-color: deepskyblue;
+          }
+      </style>
+  </head>
+  <body>
+  <div class="jumbotron text-center">
+      <h1>Superhero Sightings</h1>
+  </div>
+  <div class="container">
+      <div class="row m-4 ">
+          <div class="col text-center m-2">
+              <a href="/" class="btn btn-warning btn-lg">Home</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="superhero" class="btn btn-danger btn-lg">Superhero</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="superpower" class="btn btn-danger btn-lg">Superpowers</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="location" class="btn btn-danger btn-lg">Locations</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="organisation" class="btn btn-danger btn-lg">Organisations</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="sighting" class="btn btn-danger btn-lg">Sightings</a>
+          </div>
+      </div>
+        <div class="row m-4">
+            <div class="col-12 m-1 text-center" th:if="${!errors.isEmpty()}">
+                <p class="alert alert-danger" th:each="error : ${errors}" 
+                   th:text="${error.message}">Error message</p>
+            </div>
+            <div class="col-12 m-1 text-center" th:if="${customErrors != null and !customErrors.isEmpty()}">
+                <p class="alert alert-danger" th:each="error : ${customErrors}" 
+                   th:text="${error.message}">Error message</p>
+            </div>
+            <div class="col-3 text-center m-3">
+                <span class="h3">Add Superpower</span>
+            </div>
+            <div class="col-7 text-center m-3">
+                <form action="addSuperpower" method="POST">
+                    <div class="form-group row">
+                        <label for="superpowerName" class="col-3 col-form-label">
+                            Name</label>
+                        <div class="col-9">
+                            <input type="text" name="superpowerName" 
+                                   id="superpowerName" class="form-control"/>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+        <div class="row m-4">
+            <div class="col text-center m-3">
+                <table class="table bg-danger">
+                    <thead>
+                    <h2>
+                        Superpowers
+                    </h2>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Edit</th>
+                            <th>Details</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="superpower : ${superpowers}">
+                            <td th:text="${superpower.superpowerId}">Superpower ID</td>
+                            <td th:text="${superpower.superpowerName}">Superpower Name</td>
+                            <td><a href="#" th:href="@{/editSuperpower(id=${superpower.superpowerId})}">Edit</a></td>
+                            <td><a href="#" th:href="@{/superpowerDetail(id=${superpower.superpowerId})}">Details</a></td>
+                            <td><a href="#" th:href="@{/confirmDeleteSuperpower(id=${superpower.superpowerId})}">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> 
+  </body>
+</html>

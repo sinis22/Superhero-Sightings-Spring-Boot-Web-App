@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Superhero Sightings</title>
+      <style>
+          body {
+              background-color: deepskyblue;
+          }
+      </style>
+  </head>
+  <body>
+  <div class="container">
+      <div class="row m-4 ">
+          <div class="col text-center m-2">
+              <a href="/" class="btn btn-warning btn-lg">Home</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="superhero" class="btn btn-danger btn-lg">Superhero</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="superpower" class="btn btn-danger btn-lg">Superpowers</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="location" class="btn btn-danger btn-lg">Locations</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="organisation" class="btn btn-danger btn-lg">Organisations</a>
+          </div>
+          <div class="col text-center m-2">
+              <a href="sighting" class="btn btn-danger btn-lg">Sightings</a>
+          </div>
+      </div>
+        <div class="row m-4 border border-dark">
+            <div class="col-12 m-1 text-center"
+                 th:if="${!errors.isEmpty()}">
+                <p class="alert alert-danger" th:each="error : ${errors}"
+                   th:text="${error.message}">Error message</p>
+            </div>
+            <div class="col-12 m-1 text-center"
+                 th:if="${customErrors != null and !customErrors.isEmpty()}">
+                <p class="alert alert-danger" th:each="error : ${customErrors}"
+                   th:text="${error.message}">Error message</p>
+            </div>
+            <div class="col-3 text-center m-3">
+                <span class="h3">Edit Superhero</span>
+            </div>
+            <div class="col-7 text-center m-3">
+                <form action="editSuperhero" method="POST">
+                    <div class="form-group row">
+                        <label for="superheroName" class="col-3 col-form-label">
+                            Name</label>
+                        <div class="col-9">
+                            <input type="text" name="superheroName"
+                                   id="superheroName" class="form-control"
+                                   th:value="${superhero.superheroName}" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="superheroDescription" class="col-3 col-form-label">
+                            Description</label>
+                        <div class="col-9">
+                            <input type="text" name="superheroDescription"
+                                   id="superheroDescription" class="form-control"
+                                   th:value="${superhero.superheroDescription}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="supertypeVal" class="col-3 col-form-label">
+                            Supertype
+                        </label>
+                        <select id="supertypeVal" name="supertypeVal" class="form-control col-9" >
+                            <option value="" selected disabled hidden>Supertype</option>
+                            <option th:each="supertype : ${supertypes}" 
+                                th:value="${supertype.supertypeId}" 
+                                th:text="${supertype.supertypeName}"
+                                th:selected="${superhero.supertype.supertypeId == supertype.supertypeId}">
+                            Supertype</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="superpowerVal" class="col-3 col-form-label">
+                            Superpower
+                        </label>
+                        <select id="superpowerVal" name="superpowerVal" class="form-control col-9" >
+                            <option value="" selected disabled hidden>Superpower</option>
+                            <option th:each="superpower : ${superpowers}" 
+                                th:value="${superpower.superpowerId}" 
+                                th:text="${superpower.superpowerName}"
+                                th:selected="${superhero.superpower.superpowerId == superpower.superpowerId}">
+                            Superpower</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for ="organisationsVal" class="col-3 col-form-label">
+                            Organisations
+                        </label>
+                        <select multiple id="organisationsVal" name="organisationsVal"
+                                    class="form-control col-9" >
+                            <option th:each="organisation : ${organisations}"
+                                    th:value="${organisation.orgId}"
+                                    th:text="${organisation.orgName}"
+                                    th:selected="${superheroOrganisations.contains(organisation)}">
+                                Organisations</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="superheroId" th:value="${superhero.superheroId}"/>
+                    <button type="submit" class="btn btn-primary">OK</button>
+                    <a href="superhero" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div> 
+  </body>
+</html>
