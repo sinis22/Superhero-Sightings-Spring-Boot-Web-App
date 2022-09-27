@@ -232,7 +232,7 @@ public class SightingController {
     }
     
     @GetMapping()
-    public String displayIndex(Model model){
+    public String displayHomepage(Model model){
         List<Sighting> sightings = sightingDao.getMostRecentSightings(10);
         model.addAttribute("sightings", sightings);
         return "index";
